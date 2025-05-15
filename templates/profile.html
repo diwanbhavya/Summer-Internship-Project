@@ -1,0 +1,562 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - Cognifyz Technologies{% endblock %}
+
+{% block extra_css %}
+<!-- Add these styles to your existing CSS section -->
+<style>
+    /* Add this to your existing CSS */
+    .modal-open {
+        overflow: hidden;
+    }
+    
+    .modal-backdrop {
+        opacity: 0.5 !important;
+    }
+    
+    .modal {
+        overflow-y: auto !important;
+    }
+    
+    /* Ensure modal is on top of everything */
+    .modal-dialog {
+        z-index: 1050;
+    }
+</style>
+<style>
+    .profile-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    }
+    
+    .profile-container {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    
+    .profile-header {
+        padding: 30px;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        position: relative;
+    }
+    
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: #fff;
+        padding: 5px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: #3498db;
+    }
+    
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+    .profile-name {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin: 0;
+        text-align: center;
+    }
+    
+    .profile-joined {
+        text-align: center;
+        opacity: 0.8;
+        margin-top: 5px;
+    }
+    
+    .profile-body {
+        padding: 30px;
+    }
+    
+    .info-card {
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #f8f9fa;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .info-card h3 {
+        margin-top: 0;
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #eee;
+    }
+    
+    .info-item {
+        margin-bottom: 15px;
+    }
+    
+    .info-label {
+        font-weight: 600;
+        color: #666;
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .info-value {
+        color: #333;
+        background-color: white;
+        border-radius: 5px;
+        padding: 10px 15px;
+        display: block;
+        border: 1px solid #eee;
+    }
+    
+    .profile-actions {
+        margin-top: 30px;
+        display: flex;
+        gap: 15px;
+    }
+    
+    .profile-btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .edit-btn {
+        background-color: #3498db;
+        color: white;
+        border: none;
+    }
+    
+    .edit-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logout-btn {
+        background-color: #f8f9fa;
+        color: #dc3545;
+        border: 1px solid #dc3545;
+    }
+    
+    .logout-btn:hover {
+        background-color: #dc3545;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-icon {
+        margin-right: 8px;
+    }
+    
+    /* Edit Profile Modal Styling */
+    .modal-header {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        border-bottom: none;
+    }
+    
+    .modal-title {
+        font-weight: 600;
+    }
+    
+    .modal-close {
+        color: white;
+        opacity: 0.8;
+        transition: all 0.3s;
+    }
+    
+    .modal-close:hover {
+        opacity: 1;
+        color: white;
+    }
+    
+    .modal-body {
+        padding: 30px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    .form-control {
+        padding: 12px 15px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        width: 100%;
+        transition: all 0.3s;
+    }
+    
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        outline: none;
+    }
+    
+    .avatar-upload {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .avatar-preview {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        overflow: hidden;
+    }
+    
+    .avatar-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .avatar-input {
+        flex: 1;
+    }
+    
+    .modal-footer {
+        border-top: none;
+        padding: 15px 30px 30px;
+    }
+    
+    .save-btn {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    
+    .save-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cancel-btn {
+        background-color: #f8f9fa;
+        color: #666;
+        border: 1px solid #ddd;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin-right: 10px;
+    }
+    
+    .cancel-btn:hover {
+        background-color: #eee;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Profile Section -->
+<section class="profile-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            {% if current_user.avatar %}
+                                <img src="{{ current_user.avatar }}" alt="{{ current_user.username }}">
+                            {% else %}
+                                <i class="fas fa-user"></i>
+                            {% endif %}
+                        </div>
+                        <h1 class="profile-name">{{ current_user.username }}</h1>
+                        {% if current_user.created_at %}
+                            <p class="profile-joined">Member since {{ current_user.created_at.strftime('%B %Y') }}</p>
+                        {% elif current_user.date_registered %}
+                            <p class="profile-joined">Member since {{ current_user.date_registered.strftime('%B %Y') }}</p>
+                        {% else %}
+                            <p class="profile-joined">Member</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="profile-body">
+                        <div class="row">
+                            <!-- Enhanced Personal Information Section (Edit Button Removed) -->
+<div class="col-md-12">
+    <div class="info-card">
+        <div class="card-header-custom">
+            <h3><i class="fas fa-user-circle me-2"></i> Personal Information</h3>
+        </div>
+        
+        <div class="card-body-custom">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-user me-2"></i> Username</span>
+                        <span class="info-value">{{ current_user.username }}</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-envelope me-2"></i> Email</span>
+                        <span class="info-value">{{ current_user.email }}</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-id-card me-2"></i> Full Name</span>
+                        <span class="info-value">{{ current_user.full_name or 'Not provided' }}</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-info-circle me-2"></i> Member Since</span>
+                        <span class="info-value">
+                            {% if current_user.created_at %}
+                                {{ current_user.created_at.strftime('%B %d, %Y') }}
+                            {% elif current_user.date_registered %}
+                                {{ current_user.date_registered.strftime('%B %d, %Y') }}
+                            {% else %}
+                                Unknown
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-item bio-section">
+                <span class="info-label"><i class="fas fa-comment-alt me-2"></i> Bio</span>
+                <span class="info-value bio-text">{{ current_user.bio or 'No bio provided' }}</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+                        
+                            <div class="profile-actions">
+                            <button type="button" class="profile-btn edit-btn" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                <i class="fas fa-edit btn-icon"></i> Edit Profile
+                            </button>
+                            <a href="{{ url_for('auth.logout') }}" class="profile-btn logout-btn">
+                                <i class="fas fa-sign-out-alt btn-icon"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Enhanced Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel"><i class="fas fa-user-edit me-2"></i> Edit Your Profile</h5>
+                <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="avatar-section">
+                                <h6 class="avatar-title">Profile Picture</h6>
+                                <div class="avatar-upload-container">
+                                    <div class="avatar-preview">
+                                        {% if current_user.avatar %}
+                                            <img src="{{ current_user.avatar }}" alt="{{ current_user.username }}" id="avatar-preview-img">
+                                        {% else %}
+                                            <div class="avatar-placeholder">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="avatar-upload-btn">
+                                        <label for="avatar" class="custom-file-upload">
+                                            <i class="fas fa-camera"></i> Change Photo
+                                        </label>
+                                        <input type="file" class="form-control" id="avatar" name="avatar" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <div class="form-section">
+                                <h6 class="form-section-title">Profile Information</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="username" name="username" value="{{ current_user.username }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="full_name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="full_name" name="full_name" value="{{ current_user.full_name or '' }}">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="bio" class="form-label">Bio</label>
+                                    <textarea class="form-control" id="bio" name="bio" rows="3">{{ current_user.bio or '' }}</textarea>
+                                </div>
+                                
+                                <div class="divider"></div>
+                                
+                                <h6 class="form-section-title">Password</h6>
+                                <div class="form-group">
+                                    <label for="current_password" class="form-label">Current Password <span class="required">*</span></label>
+                                    <input type="password" class="form-control" id="current_password" name="current_password" required>
+                                    <small class="form-text text-muted">Required to save changes</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="new_password" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="new_password" name="new_password">
+                                    <small class="form-text text-muted">Leave blank to keep your current password</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn save-btn"><i class="fas fa-save me-2"></i> Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Preview uploaded avatar image
+    document.getElementById('avatar').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewContainer = document.querySelector('.avatar-preview');
+                
+                // Remove placeholder if exists
+                const placeholder = previewContainer.querySelector('.avatar-placeholder');
+                if (placeholder) {
+                    previewContainer.innerHTML = '';
+                }
+                
+                // Update or create image
+                let previewImg = previewContainer.querySelector('img');
+                if (!previewImg) {
+                    previewImg = document.createElement('img');
+                    previewImg.id = 'avatar-preview-img';
+                    previewContainer.appendChild(previewImg);
+                }
+                
+                previewImg.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    // Disable scrolling on background when modal is open
+    const profileModal = document.getElementById('editProfileModal');
+    profileModal.addEventListener('shown.bs.modal', function () {
+        document.body.style.overflow = 'hidden';
+    });
+    
+    profileModal.addEventListener('hidden.bs.modal', function () {
+        document.body.style.overflow = '';
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Avatar preview functionality
+        const avatarInput = document.getElementById('avatar');
+        const avatarPreviewImg = document.getElementById('avatar-preview-img');
+        const avatarDefaultIcon = document.getElementById('avatar-default-icon');
+        
+        if (avatarInput) {
+            avatarInput.addEventListener('change', function() {
+                const file = this.files[0];
+                
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        if (avatarDefaultIcon) {
+                            avatarDefaultIcon.style.display = 'none';
+                        }
+                        if (avatarPreviewImg) {
+                            avatarPreviewImg.style.display = 'block';
+                            avatarPreviewImg.src = e.target.result;
+                        }
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        // Password confirmation validation
+        const newPasswordInput = document.getElementById('new_password');
+        const confirmPasswordInput = document.getElementById('confirm_password');
+        const editProfileForm = document.getElementById('edit-profile-form');
+        
+        if (editProfileForm) {
+            editProfileForm.addEventListener('submit', function(e) {
+                if (newPasswordInput && confirmPasswordInput) {
+                    const newPassword = newPasswordInput.value;
+                    const confirmPassword = confirmPasswordInput.value;
+                    
+                    // If new password is provided, check if it matches confirmation
+                    if (newPassword && newPassword !== confirmPassword) {
+                        e.preventDefault();
+                        alert('New password and confirmation do not match!');
+                        confirmPasswordInput.focus();
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

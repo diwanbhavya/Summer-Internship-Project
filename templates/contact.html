@@ -1,0 +1,449 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Cognifyz Technologies{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Contact Section */
+    #contact-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    }
+    
+    .form-container {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        margin-bottom: 30px;
+    }
+    
+    .form-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .input-group {
+        margin-bottom: 25px;
+    }
+    
+    .form-control {
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        transition: all 0.3s;
+        box-shadow: none;
+    }
+    
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        outline: none;
+    }
+    
+    .form-submit {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        width: 100%;
+    }
+    
+    .form-submit:hover {
+        background: linear-gradient(135deg, #2980b9, #3498db);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+    }
+    
+    /* Contact Info Section */
+    .contact-info-container {
+        background-color: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        height: 100%;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .contact-info-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .contact-method {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+    
+    .contact-icon {
+        width: 50px;
+        height: 50px;
+        background-color: #3498db;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: white;
+        font-size: 20px;
+        flex-shrink: 0;
+        transition: all 0.3s;
+    }
+    
+    .contact-method:hover .contact-icon {
+        background-color: #2980b9;
+        transform: scale(1.1) rotate(10deg);
+    }
+    
+    .contact-info {
+        flex-grow: 1;
+    }
+    
+    .contact-info h4 {
+        margin: 0 0 5px;
+        color: #333;
+        font-size: 18px;
+    }
+    
+    .contact-info p {
+        margin: 0;
+        color: #666;
+    }
+    
+    .social-contact {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        background-color: #f8f9fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3498db;
+        font-size: 18px;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+    
+    .social-icon:hover {
+        background-color: #3498db;
+        color: white;
+        transform: translateY(-5px);
+    }
+    
+    /* Map Section */
+    .map-container {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        height: 300px;
+        margin-top: 30px;
+    }
+    
+    .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    
+    /* Form validation styles */
+    .form-control.is-invalid {
+        border-color: #dc3545;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+    
+    .invalid-feedback {
+        display: none;
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 80%;
+        color: #dc3545;
+    }
+    
+    .form-control.is-invalid ~ .invalid-feedback {
+        display: block;
+    }
+    
+    /* FAQs Section */
+    .faq-container {
+        margin-top: 50px;
+    }
+    
+    .accordion-item {
+        margin-bottom: 15px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #eee;
+    }
+    
+    .accordion-header {
+        background-color: white;
+        padding: 0;
+        border: none;
+    }
+    
+    .accordion-button {
+        padding: 15px 20px;
+        font-weight: 600;
+        color: #333;
+        background-color: white;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        color: #3498db;
+        background-color: rgba(52, 152, 219, 0.05);
+    }
+    
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(52, 152, 219, 0.1);
+    }
+    
+    .accordion-body {
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Contact Section -->
+<section id="contact-section">
+    <div class="container">
+        <h2 class="section-title">Contact Us</h2>
+        <p class="section-subtitle">Let's discuss how we can help your business</p>
+
+        <div class="row">
+            <!-- Contact Form -->
+            <div class="col-lg-7 mb-4 mb-lg-0">
+                <div class="form-container">
+                    <h3 class="mb-4">Send us a message</h3>
+                    <form id="contact-form" method="POST" action="{{ url_for('forms.contact') }}" novalidate>
+                        <div class="input-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                            <div class="invalid-feedback">Please provide your name.</div>
+                        </div>
+                        <div class="input-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                            <div class="invalid-feedback">Please provide a valid email address.</div>
+                        </div>
+                        <div class="input-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-control" placeholder="What is this regarding?" required>
+                            <div class="invalid-feedback">Please provide a subject.</div>
+                        </div>
+                        <div class="input-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" class="form-control" rows="5" placeholder="How can we help you?" required></textarea>
+                            <div class="invalid-feedback">Please provide your message.</div>
+                        </div>
+                        <button type="submit" class="form-submit">
+                            <i class="fas fa-paper-plane me-2"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="col-lg-5">
+                <div class="contact-info-container">
+                    <h3 class="mb-4">Get in touch</h3>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Our Location</h4>
+                            <p>123 Tech Park, Innovation Street, Mumbai, India 400001</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Call Us</h4>
+                            <p>+91 98765 43210</p>
+                            <p>+91 12345 67890</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Email Us</h4>
+                            <p>contact@cognifyz.com</p>
+                            <p>support@cognifyz.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Working Hours</h4>
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                            <p>Saturday: 10:00 AM - 2:00 PM</p>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-4 mb-3">Connect with us</h4>
+                    <div class="social-contact">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.11609823277!2d72.74109895703125!3d19.08268810000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1626234079692!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-container">
+            <h3 class="text-center mb-4">Frequently Asked Questions</h3>
+
+            <div class="accordion" id="contactFAQ">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            How quickly can I expect a response to my inquiry?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#contactFAQ">
+                        <div class="accordion-body">
+                            We strive to respond to all inquiries within 24 hours during business days. For urgent matters, we recommend calling our customer support line for immediate assistance.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Do you offer services internationally?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#contactFAQ">
+                        <div class="accordion-body">
+                            Yes, Cognifyz Technologies offers services globally. We have clients across North America, Europe, Asia, and Australia. Our team works remotely with international clients, and we adjust our scheduling to accommodate different time zones.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            How can I schedule a consultation?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#contactFAQ">
+                        <div class="accordion-body">
+                            You can schedule a consultation by filling out our contact form, emailing us directly at consultations@cognifyz.com, or calling our office. We offer both in-person and virtual consultations to accommodate your preferences and location.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            What information should I include in my initial inquiry?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#contactFAQ">
+                        <div class="accordion-body">
+                            To help us provide the most relevant response, please include details about your project requirements, timeline, budget range, and any specific technologies or services you're interested in. The more information you provide, the better we can tailor our response to your needs.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Form validation
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('contact-form');
+        
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                // Show validation messages
+                const inputs = form.querySelectorAll('.form-control');
+                inputs.forEach(input => {
+                    if (!input.validity.valid) {
+                        input.classList.add('is-invalid');
+                    } else {
+                        input.classList.remove('is-invalid');
+                    }
+                });
+            } else {
+                // If the form is valid, show a loading state on the button
+                const submitButton = form.querySelector('.form-submit');
+                const originalText = submitButton.innerHTML;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Sending...';
+                submitButton.disabled = true;
+                
+                // After submission, return the button to original state
+                // This would typically be handled by the backend response,
+                // but for demo purposes we set a timeout
+                setTimeout(() => {
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                }, 2000);
+            }
+        });
+        
+        // Remove invalid class when user corrects input
+        const inputs = form.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.checkValidity()) {
+                    this.classList.remove('is-invalid');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

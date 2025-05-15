@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Image Gallery - Cognifyz Technologies{% endblock %}
+
+{% block content %}
+<!-- Image Gallery Section -->
+<section id="gallery">
+    <div class="container">
+        <h2 class="section-title">Image Gallery</h2>
+        <p class="section-subtitle">Click on images to enlarge</p>
+        <div class="gallery-container">
+            <img src="{{ url_for('static', filename='images/image4.png') }}" alt="Gallery Image 1" class="gallery-thumbnail" onclick="openModal(this)">
+            <img src="{{ url_for('static', filename='images/image6.png') }}" alt="Gallery Image 2" class="gallery-thumbnail" onclick="openModal(this)">
+            <img src="{{ url_for('static', filename='images/image5.png') }}" alt="Gallery Image 3" class="gallery-thumbnail" onclick="openModal(this)">
+            <img src="{{ url_for('static', filename='images/image8.png') }}" alt="Gallery Image 4" class="gallery-thumbnail" onclick="openModal(this)">
+            <img src="{{ url_for('static', filename='images/image7.jpg') }}" alt="Gallery Image 5" class="gallery-thumbnail" onclick="openModal(this)">
+            <img src="{{ url_for('static', filename='images/image9.png') }}" alt="Gallery Image 6" class="gallery-thumbnail" onclick="openModal(this)">
+        </div>
+        
+        <!-- Modal for enlarged images -->
+        <div id="imageModal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="enlargedImage">
+        </div>
+    </div>
+</section>
+{% endblock %}

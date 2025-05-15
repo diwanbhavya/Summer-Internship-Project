@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}About Cognifyz Technologies{% endblock %}
+
+{% block content %}
+<!-- About Section -->
+<section id="about" class="container">
+    <h2 class="section-title">About Cognifyz Technologies</h2>
+    <p class="section-subtitle">Where Data Meets Intelligence</p>
+    <div class="row align-items-center">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <p>Cognifyz Technologies is a leading technology company that specializes in the dynamic field of data science and excels in delivering impactful projects and solutions. The company offers a wide range of products and services, including artificial intelligence (AI), machine learning (ML), and data analytics tools.</p>
+            <p>Our internship program provides hands-on experience with real-world projects, mentorship from industry experts, and opportunities to build your professional portfolio.</p>
+            <button onclick="changeColor()" id="colorBtn" class="color-change-button">Click Me to Change Color</button>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/collaboration.png') }}" alt="Collaboration at Cognifyz Technologies" class="img-fluid about-image">
+        </div>
+    </div>
+</section>
+{% endblock %}

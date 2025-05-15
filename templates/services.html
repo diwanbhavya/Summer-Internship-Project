@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - Cognifyz Technologies{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Card Styles */
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+        margin-bottom: 30px;
+        height: 100%;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-image {
+        overflow: hidden;
+    }
+    
+    .card-image img {
+        transition: transform 0.5s;
+        width: 100%;
+        height: auto;
+    }
+    
+    .card:hover .card-image img {
+        transform: scale(1.05);
+    }
+    
+    /* Interactive Tools Section */
+    .tools-section {
+        padding: 80px 0;
+        background-color: #f8f9fa;
+        margin-top: 50px;
+    }
+    
+    .tools-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+    }
+    
+    .tool-card {
+        flex: 1;
+        min-width: 300px;
+        max-width: 500px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s;
+    }
+    
+    .tool-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .tool-icon {
+        font-size: 48px;
+        color: #3498db;
+        margin-bottom: 20px;
+        display: block;
+    }
+    
+    .tool-title {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: #333;
+    }
+    
+    .tool-description {
+        margin-bottom: 25px;
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .tool-button {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .tool-button:hover {
+        background-color: #2980b9;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        color: white;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Card Section -->
+<section id="cards">
+    <div class="container">
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-subtitle">Explore what we offer</p>
+        
+        <!-- Responsive Grid Layout using Bootstrap -->
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ url_for('static', filename='images/image3.png') }}" alt="AI Solutions">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                            <h4 class="title is-4">AI Solutions</h4>
+                            <p>We develop cutting-edge artificial intelligence solutions to solve complex business problems and drive innovation.</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-footer-item">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ url_for('static', filename='images/image1.png') }}" alt="Data Analytics">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                            <h4 class="title is-4">Data Analytics</h4>
+                            <p>Transform your raw data into actionable insights with our advanced data analytics and visualization services.</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-footer-item">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ url_for('static', filename='images/image2.png') }}" alt="Machine Learning">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                            <h4 class="title is-4">Machine Learning</h4>
+                            <p>Our machine learning solutions help businesses automate processes, predict trends, and make data-driven decisions.</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-footer-item">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Tools Section -->
+<section id="interactive-tools" class="tools-section">
+    <div class="container">
+        <h2 class="section-title">Interactive Tools</h2>
+        <p class="section-subtitle">Experience our digital solutions firsthand</p>
+        
+        <div class="tools-container">
+            <!-- Calculator Tool Card -->
+            <div class="tool-card">
+                <i class="fas fa-calculator tool-icon"></i>
+                <h3 class="tool-title">Data Calculator</h3>
+                <p class="tool-description">Access our powerful calculator for all your data science and analytical calculations. Features both standard and scientific modes.</p>
+                <a href="{{ url_for('main.calculator') }}" class="tool-button">
+                    <i class="fas fa-arrow-right mr-2"></i> Open Calculator
+                </a>
+            </div>
+            
+            <!-- Slideshow Tool Card -->
+            <div class="tool-card">
+                <i class="fas fa-images tool-icon"></i>
+                <h3 class="tool-title">Project Showcase</h3>
+                <p class="tool-description">View a gallery of our flagship AI and data analytics projects. See how we've helped businesses transform their operations with innovative solutions.</p>
+                <a href="{{ url_for('main.slideshow') }}" class="tool-button">
+                    <i class="fas fa-arrow-right mr-2"></i> View Projects
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
